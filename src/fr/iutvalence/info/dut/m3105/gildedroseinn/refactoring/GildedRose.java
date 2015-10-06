@@ -7,7 +7,7 @@ public class GildedRose
 {
 
 	private static List<Item> items = null;
-
+	
 	/**
 	 * @param args
 	 */
@@ -24,84 +24,102 @@ public class GildedRose
 		items.add(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
 		items.add(new Item("Conjured Mana Cake", 3, 6));
 
-		updateQuality();
+		updateQualityAndSellInForAllItems();
 	}
-
-	public static void updateQuality()
+	 
+	// update quality and sellIn for all items
+	public static void updateQualityAndSellInForAllItems()
 	{
-		for (int i = 0; i < items.size(); i++)
+		// picks up each item of the list
+		for (int i = 0; i < getSize(items); i++)
 		{
-			if ((!"Aged Brie".equals(items.get(i).getName()))
-					&& !"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+			// update picked up item's quality and sell in
+			if ((!"Aged Brie".equals(getItem(items, i).getName()))
+					&& !"Backstage passes to a TAFKAL80ETC concert".equals(getItem(items, i).getName()))
 			{
-				if (items.get(i).getQuality() > 0)
+				if (getItem(items, i).getQuality() > 0)
 				{
-					if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+					if (!"Sulfuras, Hand of Ragnaros".equals(getItem(items, i).getName()))
 					{
-						items.get(i).setQuality(items.get(i).getQuality() - 1);
+						getItem(items, i).setQuality(getItem(items, i).getQuality() - 1);
 					}
 				}
 			}
 			else
 			{
-				if (items.get(i).getQuality() < 50)
+				if (getItem(items, i).getQuality() < 50)
 				{
-					items.get(i).setQuality(items.get(i).getQuality() + 1);
+					getItem(items, i).setQuality(getItem(items, i).getQuality() + 1);
 
-					if ("Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+					if ("Backstage passes to a TAFKAL80ETC concert".equals(getItem(items, i).getName()))
 					{
-						if (items.get(i).getSellIn() < 11)
+						if (getItem(items, i).getSellIn() < 11)
 						{
-							if (items.get(i).getQuality() < 50)
+							if (getItem(items, i).getQuality() < 50)
 							{
-								items.get(i).setQuality(items.get(i).getQuality() + 1);
+								getItem(items, i).setQuality(getItem(items, i).getQuality() + 1);
 							}
 						}
 
-						if (items.get(i).getSellIn() < 6)
+						if (getItem(items, i).getSellIn() < 6)
 						{
-							if (items.get(i).getQuality() < 50)
+							if (getItem(items, i).getQuality() < 50)
 							{
-								items.get(i).setQuality(items.get(i).getQuality() + 1);
+								getItem(items, i).setQuality(getItem(items, i).getQuality() + 1);
 							}
 						}
 					}
 				}
 			}
-
-			if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+			// update picked up item's sellIn
+			if (!"Sulfuras, Hand of Ragnaros".equals(getItem(items, i).getName()))
 			{
-				items.get(i).setSellIn(items.get(i).getSellIn() - 1);
+				getItem(items, i).setSellIn(getItem(items, i).getSellIn() - 1);
 			}
-
-			if (items.get(i).getSellIn() < 0)
+			// update picked up item's quality depending on the sellIn
+			if (getItem(items, i).getSellIn() < 0)
 			{
-				if (!"Aged Brie".equals(items.get(i).getName()))
+				if (!"Aged Brie".equals(getItem(items, i).getName()))
 				{
-					if (!"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+					if (!"Backstage passes to a TAFKAL80ETC concert".equals(getItem(items, i).getName()))
 					{
-						if (items.get(i).getQuality() > 0)
+						if (getItem(items, i).getQuality() > 0)
 						{
-							if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+							if (!"Sulfuras, Hand of Ragnaros".equals(getItem(items, i).getName()))
 							{
-								items.get(i).setQuality(items.get(i).getQuality() - 1);
+								getItem(items, i).setQuality(getItem(items, i).getQuality() - 1);
 							}
 						}
 					}
 					else
 					{
-						items.get(i).setQuality(items.get(i).getQuality() - items.get(i).getQuality());
+						getItem(items, i).setQuality(getItem(items, i).getQuality() - getItem(items, i).getQuality());
 					}
 				}
 				else
 				{
-					if (items.get(i).getQuality() < 50)
+					if (getItem(items, i).getQuality() < 50)
 					{
-						items.get(i).setQuality(items.get(i).getQuality() + 1);
+						getItem(items, i).setQuality(getItem(items, i).getQuality() + 1);
 					}
 				}
 			}
 		}
 	}
+	
+	public static Item getItem(List<Item> itemsList, int i) {
+		return itemsList.get(i);
+	}
+	
+	public static Item getItem(Item[] itemsTab, int i) {
+		return itemsTab[i];
+	}
+	
+	public static int getSize(List<Item> itemsList) {
+		return itemsList.size();
+	}
 
+	public static int getSize(Item[] itemsTab) {
+		return itemsTab.length;
+	}
 }
